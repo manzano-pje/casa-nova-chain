@@ -106,6 +106,17 @@ const Index = () => {
           </section>
         )}
 
+        <section id="cadastro" className="grid gap-6 md:grid-cols-2 items-start">
+          {loggedIn && isOwnerRole ? (
+            <PropertyFormCard currentUserId={currentUserId!} onCreate={handleCreate} />
+          ) : (
+            <div className="card-elevated p-6">
+              <p className="font-medium mb-1">Cadastro de imóvel</p>
+              <p className="text-sm text-muted-foreground">Disponível apenas para usuários proprietários autenticados.</p>
+            </div>
+          )}
+        </section>
+
         <Separator className="my-10" />
 
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
