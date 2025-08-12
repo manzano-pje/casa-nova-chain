@@ -16,6 +16,7 @@ interface PropertyCardProps {
 
 export function PropertyCard({ property, currentUserId, canRent, onRent }: PropertyCardProps) {
   const [days, setDays] = useState<number>(1);
+  const [expanded, setExpanded] = useState(false);
   const { toast } = useToast();
 
   const isOwner = currentUserId && property.ownerId === currentUserId;
@@ -58,29 +59,45 @@ export function PropertyCard({ property, currentUserId, canRent, onRent }: Prope
           loading="lazy"
           className="w-full h-52 object-cover rounded-md"
         />
-        <p className="text-sm text-muted-foreground text-left">{property.description}</p>
+        {/* Preço sempre visível */}
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">Valor por dia</span>
           <span className="font-semibold">{property.priceWei.toString()} wei</span>
         </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <div className="flex-1 grid gap-1 text-left">
-            <label className="text-sm flex items-center gap-2"><CalendarDays className="text-foreground/60" />Dias de locação</label>
-            <Input
-              type="number"
-              min={1}
-              value={days}
-              onChange={(e) => setDays(Math.max(1, Number(e.target.value)))}
-            />
-          </div>
-          <div className="text-right sm:w-56">
-            <div className="text-xs text-muted-foreground">Total</div>
-            <div className="text-lg font-semibold break-all">{totalWei.toString()} wei</div>
-          </div>
-        </div>
+
+        {expanded && (
+          <>
+            <p className="text-sm text-muted-foreground text-left">{property.description}</p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div className="flex-1 grid gap-1 text-left">
+                <label className="text-sm flex items-center gap-2"><CalendarDays className="text-foreground/60" />Dias de locação</label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={days}
+                  onChange={(e) => setDays(Math.max(1, Number(e.target.value)))}
+                />
+              </div>
+              <div className="text-right sm:w-56">
+                <div className="text-xs text-muted-foreground">Total</div>
+                <div className="text-lg font-semibold break-all">{totalWei.toString()} wei</div>
+              </div>
+            </div>
+          </>
+        )}
       </CardContent>
-      <CardFooter className="justify-end">
-        <Button onClick={handleRent} variant="hero" disabled={isDisabled}>Alugar</Button>
+      <CardFooter className="justify-between">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+        >
+          {expanded ? "Ocultar detalhes" : "Ver detalhes"}
+        </Button>
+        {expanded && (
+          <Button onClick={handleRent} variant="hero" disabled={isDisabled}>Alugar</Button>
+        )}
       </CardFooter>
     </Card>
   );
