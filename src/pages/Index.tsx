@@ -88,7 +88,9 @@ const Index = () => {
       <main className="container pb-16">
         <section className="py-10 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">Aluguel de imóveis em wei</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto"></p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+           
+          </p>
         </section>
 
         {!loggedIn && (
@@ -115,6 +117,17 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">Disponível apenas para usuários proprietários autenticados.</p>
             </div>
           )}
+
+          <div className="card-elevated p-6">
+            <p className="font-medium mb-1">Regras de negócios</p>
+            <ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1 text-left">
+              <li>Para cadastrar, o usuário deve estar logado.</li>
+              <li>Somente o proprietário pode cadastrar imóveis.</li>
+              <li>O proprietário não pode alugar o próprio imóvel.</li>
+              <li>Selecione os dias e veja o valor total (em wei) antes de alugar.</li>
+              <li>Imóveis alugados ficam esmaecidos e aparecem após os disponíveis.</li>
+            </ul>
+          </div>
         </section>
 
         <Separator className="my-10" />
