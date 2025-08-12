@@ -39,20 +39,21 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Brand & motion tokens */
+    --brand: 215 85% 50%;
+    --brand-2: 200 90% 55%;
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-2)));
+    --shadow-elegant: 0 12px 30px -12px hsl(var(--brand) / 0.35);
+    --shadow-soft: 0 6px 20px -10px hsl(var(--foreground) / 0.08);
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
@@ -91,6 +92,14 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Brand & motion tokens (dark) */
+    --brand: 217 92% 60%;
+    --brand-2: 200 95% 62%;
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-2)));
+    --shadow-elegant: 0 12px 30px -12px hsl(var(--brand) / 0.4);
+    --shadow-soft: 0 6px 20px -10px hsl(var(--background) / 0.35);
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -101,5 +110,39 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Components & utilities layered on the design system */
+@layer components {
+  .btn-hero {
+    background: var(--gradient-brand);
+    color: hsl(var(--primary-foreground));
+    border: 1px solid hsl(var(--border) / 0);
+    box-shadow: var(--shadow-elegant);
+    transition: var(--transition-smooth);
+  }
+  .btn-hero:hover { transform: translateY(-1px); }
+  .btn-hero:active { transform: translateY(0); }
+
+  .card-elevated {
+    @apply bg-card text-card-foreground rounded-lg;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@layer utilities {
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  .hero-ambient {
+    background-image: var(--gradient-brand);
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease-in-out infinite alternate;
+    filter: blur(40px);
+    opacity: 0.2;
+    pointer-events: none;
   }
 }
